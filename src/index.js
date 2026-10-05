@@ -8,7 +8,7 @@ const hostname = process.env.HOSTNAME || "127.0.0.1";
 const cors = require("cors");
 
 serveur.use(cors({ 
-  origin: "127.0.0.1", 
+  origin: true, 
   credentials: true 
 }));
 
