@@ -1,34 +1,27 @@
-const db = require("../config/database");
-const bcrypt = require("bcrypt");
+
+const User = require("../models/user.model");
 const jwt = require("jsonwebtoken");
 const secretJWT = process.env.JWT_SECRET;
 
 module.exports = async (req, res) => {
   try {
-    const { telephone_user, mot_de_passe_user } = req.body;
+    // déjà connecté
+    if (req.cookies["token"]) return res.json({
+      message: "Vous êtes déjà connecté"
+    });
 
+
+    const { telephone_user, mot_de_passe_user } = req.body;
     const type = (!telephone_user || !mot_de_passe_user ||
       typeof telephone_user !== "string" || typeof mot_de_passe_user !== "string");
 
     if (type) return res.status(400).json({
       message: "Erreur données fournies"
     });
+    
 
-    const [rows] = await db.execute(
-      "SELECT * FROM users WHERE telephone_user = ?",
-      [telephone_user]
-    );
-
-    if (rows.length === 0) {
-      return res.status(401).json({ message: "Identifiants incorrects" });
-    }
-
-    const user = rows[0];
-
-    const isMatch = await bcrypt.compare(mot_de_passe_user, user.mot_de_passe_user);
-    if (!isMatch) {
-      return res.status(401).json({ message: "Identifiants incorrects" });
-    }
+    // model User
+    const user = await User.login(telephone_user, mot_de_passe_user);
 
     const token = jwt.sign(
       {
@@ -48,12 +41,17 @@ module.exports = async (req, res) => {
       path: "/"
     });
 
-    return res.json({
+    return res.status(200).json({
       message: "connecté"
     });
 
   } catch (error) {
-    console.error(error);
+    console.error(error.message);
+    if(error.message === "Identifiants incorrects") {
+      return res.status(401).json({
+        message: "Identifiants incorrects"
+      })
+    }
     res.status(500).json({ message: "Erreur serveur" });
   }
 };   

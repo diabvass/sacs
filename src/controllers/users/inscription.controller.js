@@ -1,6 +1,4 @@
-const db = require("../config/database");
-const bcrypt = require("bcrypt");
-
+const User = require("../../models/user.model");
 module.exports = async (req, res) => {
   try {
     const { nom_user, role, telephone_user, mot_de_passe_user } = req.body;
@@ -13,18 +11,16 @@ module.exports = async (req, res) => {
       message: "Erreur données fournies"
     });
 
-    const id = "U" + Date.now();
-    const hash = await bcrypt.hash(mot_de_passe_user, 10);
-
-    await db.execute(
-      "INSERT INTO users (id_user, nom_user, role, telephone_user, mot_de_passe_user) VALUES (?, ?, ?, ?, ?)",
-      [id, nom_user, role, telephone_user, hash]
-    );
-
-    res.status(201).json({ message: "Utilisateur créé avec succès" });
+    await User.sign(nom_user, role, telephone_user, mot_de_passe_user)
+    return res.status(201).json({ message: "Utilisateur créé avec succès" });
 
   } catch (error) {
-    console.error(error);
+    console.error(error.message);
+    if(error.code === 'ER_DUP_ENTRY'){
+      res.status(400).json({
+        message: "Ce numéro existe déjà."
+      })
+    }
     res.status(500).json({ message: "Erreur serveur" });
   }
 };   

@@ -8,7 +8,6 @@ module.exports = async (__req, res) => {
   });
 
   res.json({
-    success: true,
     message: "Déconnexion réussie"
   });
 };
