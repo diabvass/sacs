@@ -1,2 +1,4 @@
 const users = require("./users/index.controller");
-module.exports = {users};
+const reservation = require("./reservation/index.controller");
+
+module.exports = {users, reservation};
