@@ -1,6 +1,6 @@
-const db = require("../config/database");
+const db = require("../../config/database");
 
-const Balle = {
+module.exports = {
     stockActuel: async () => {
         const [find] = await db.execute(
             `SELECT
@@ -24,7 +24,5 @@ const Balle = {
 
         if (!find) throw new Error("Erreur lors de la requête.")
         return find;
-    },
-}
-
-module.exports = Balle;
+    }
+};

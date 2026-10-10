@@ -1,5 +1,5 @@
 
-const Balle = require("../../models/balle.model");
+const Balle = require("../../models/balles/stockActuel.model");
 
 module.exports = async (__req, res) => {
     try {
