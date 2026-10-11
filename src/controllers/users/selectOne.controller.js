@@ -9,11 +9,12 @@ module.exports = async (req, res) => {
             message: "Erreur données fournies"
         })
 
+        // user connecté
         const role = req.user.role;
-        const id_user = req.user.id_user; // celui connecté
+        const id_user = req.user.id_user;
 
         if (role === "gerant" && idPk !== id_user) {
-            console.log("Accès interdit : vous ne pouvez pas voir les informations cet utilisateur.")
+            console.log("Accès interdit() : vous ne pouvez pas voir les informations cet utilisateur.")
             return res.status(403).json({
                 message: "Accès interdit : vous ne pouvez pas voir les informations cet utilisateur."
             });
@@ -27,6 +28,8 @@ module.exports = async (req, res) => {
 
     } catch (error) {
         console.error(error.message);
+        if(error.message === 'Utilisateur non trouvé')
+            return res.status(400).json({ message: error.message });
         res.status(500).json({ message: "Erreur serveur" });
     }
 };   

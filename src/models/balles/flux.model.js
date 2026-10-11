@@ -15,8 +15,8 @@ const Flux = {
             SELECT 
             SUM(
                 CASE
-                    WHEN FS.type_flux = 'ENTREE' THEN FS.nombre_balle
-                    WHEN FS.type_flux = 'SORTIE' THEN - FS.nombre_balle
+                    WHEN FS.type_flux = 'entree' THEN FS.nombre_balle
+                    WHEN FS.type_flux = 'sortie' THEN - FS.nombre_balle
                     ELSE 0
                 END ) AS stock
             FROM flux_stock FS

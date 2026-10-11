@@ -9,8 +9,8 @@ module.exports = {
                 DATE_FORMAT(NOW(), '%d/%m/%Y %H:%i:%s') as date,
                 SUM(
                     CASE
-                        WHEN FS.type_flux = 'ENTREE' THEN FS.nombre_balle
-                        WHEN FS.type_flux = 'SORTIE' THEN - FS.nombre_balle
+                        WHEN FS.type_flux = 'entree' THEN FS.nombre_balle
+                        WHEN FS.type_flux = 'sortie' THEN - FS.nombre_balle
                         ELSE 0
                     END
                 ) AS stock
