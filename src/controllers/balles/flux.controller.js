@@ -11,7 +11,7 @@ module.exports = async (req, res) => {
         const id_user = req.user.id_user; // user connecté
 
         const type = (!type_flux || !nombre_balle || !id_balle ||
-            typeof type_flux !== "string" || typeof id_balle !== "string" ||
+            typeof type_flux !== "string" || typeof id_balle !== "number" ||
             typeof nombre_balle !== "number");
 
         if (type) return res.status(400).json({

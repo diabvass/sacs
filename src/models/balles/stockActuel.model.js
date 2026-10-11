@@ -6,7 +6,7 @@ module.exports = {
             `SELECT
                 BA.id_balle,
                 BA.designation,
-                DATE_FORMAT(NOW(), '%d/%m/%Y %H:%i:%s') as date,
+                DATE_FORMAT(NOW(), '%a %M %Y - %H:%i') as date,
                 SUM(
                     CASE
                         WHEN FS.type_flux = 'entree' THEN FS.nombre_balle
