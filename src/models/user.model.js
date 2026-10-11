@@ -35,7 +35,7 @@ const User = {
             "SELECT id_user, nom_user, role, telephone_user FROM users"
         );
 
-        if (!find) throw new Error("Erreur lors de la requête.")
+        if (!find) throw new Error("aucune inforamation")
         return find;
     },
 
@@ -44,7 +44,7 @@ const User = {
             "SELECT id_user, nom_user, role, telephone_user FROM users WHERE id_user=?",
             [id]
         );
-        if (!user) throw new Error ("User non trouvé");
+        if (!user || user.length === 0) throw new Error ("Utilisateur non trouvé");
         return user;
     }
 }

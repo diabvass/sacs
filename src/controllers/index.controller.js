@@ -1,2 +1,3 @@
 const users = require("./users/index.controller");
-module.exports = {users};
+const balles = require("./balles/index.controller");
+module.exports = {users, balles};
