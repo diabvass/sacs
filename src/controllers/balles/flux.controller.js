@@ -34,9 +34,9 @@ module.exports = async (req, res) => {
         }
 
         await Balle.ES(type_flux, nombre_balle, id_balle, id_user);
-
+        const mes = type_flux === "entree" ? "Depôt" : "Retrait";
         return res.status(201).json({
-            message: "le stock a été mis à jour.",
+            message: `${mes} de ${nombre_balle} balle(s) - le stock a été mis à jour.`,
         })
 
     } catch (error) {

@@ -3,5 +3,6 @@ const auth = require("../../middlewares/index");
 const controller = require("../../controllers/index.controller");
 
 Router.get("/", auth(["admin"]), controller.balles.stockActuel);
-Router.post("/flux", auth(["admin", "gerant"]), controller.balles.Flux)
+Router.post("/flux", auth(["admin", "gerant"]), controller.balles.Flux);
+Router.get("/:id_balle", auth(["admin", "gerant"]), controller.balles.stockActuelOne);
 module.exports = Router;
